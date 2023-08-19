@@ -1,8 +1,10 @@
+import Route from './routes';
+
 function App() {
   return (
-    <>
-      <div className='bg-blue-200'>MYF PWA</div>
-    </>
+    <div className='flex h-full bg-brand-grey1'>
+      <Route />
+    </div>
   );
 }
 
