@@ -18,7 +18,10 @@ function App() {
   });
   return (
     <>
-      <div className='bg-blue-200'>MYF PWA</div>
+      <div className='bg-blue-200'>
+        <LoginButton />
+        <LogoutButton />
+      </div>
     </>
   );
 }

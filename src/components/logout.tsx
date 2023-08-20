@@ -9,7 +9,7 @@ function Logout() {
 
   return (
     <div id='singOutButton'>
-      <GoogleLogout clientId={clientiId} buttonText='Login' onLogoutSuccess={onSuccess} />
+      <GoogleLogout clientId={clientiId} buttonText='Logout' onLogoutSuccess={onSuccess} />
     </div>
   );
 }
