@@ -1,6 +1,6 @@
 interface InfoCellProps {
   title: string;
-  content: string;
+  content: string | number;
 }
 
 export const InfoCell = ({ title, content }: InfoCellProps) => {

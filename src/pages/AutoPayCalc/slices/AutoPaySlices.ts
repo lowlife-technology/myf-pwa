@@ -1,43 +1,24 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { getAsset } from '../services';
 
-export interface CashDividend {
+export interface CashDividends {
   paymentDate: Date;
   rate: number;
 }
 
-interface initialStateProps {
+export interface StaticReducerProps {
+  openData: string;
+  quantity: number;
+}
+
+export interface AutoPayInitialStateProps {
   data: {
     symbol: string;
     shortName: string;
-    longName: string;
-    currency: string;
     regularMarketPrice: number;
-    regularMarketDayHigh: number;
-    regularMarketDayLow: number;
-    regularMarketDayRange: string;
-    regularMarketChange: number;
-    regularMarketChangePercent: number;
-    regularMarketTime: string;
-    marketCap: number;
     logourl: string;
-    regularMarketVolume: number;
-    regularMarketPreviousClose: number;
-    regularMarketOpen: number;
-    averageDailyVolume10Day: number;
-    averageDailyVolume3Month: number;
-    fiftyTwoWeekLowChange: number;
-    fiftyTwoWeekLowChangePercent: number;
-    fiftyTwoWeekRange: string;
-    fiftyTwoWeekHigh: number;
-    fiftyTwoWeekHighChange: number;
-    fiftyTwoWeekHighChangePercent: number;
-    fiftyTwoWeekLow: number;
-    twoHundredDayAverage: number;
-    twoHundredDayAverageChange: number;
-    twoHundredDayAverageChangePercent: number;
     dividendsData: {
-      cashDividend: CashDividend[];
+      cashDividends: CashDividends[];
       stockDividends: object[];
       subscriptions: object[];
     };
@@ -46,40 +27,17 @@ interface initialStateProps {
     loading: string;
     message: string | undefined;
   };
+  staticReducer: StaticReducerProps[];
 }
 
-const initialState: initialStateProps = {
+const initialState: AutoPayInitialStateProps = {
   data: {
     symbol: '',
     shortName: '',
-    longName: '',
-    currency: '',
     regularMarketPrice: 0,
-    regularMarketDayHigh: 0,
-    regularMarketDayLow: 0,
-    regularMarketDayRange: '',
-    regularMarketChange: 0,
-    regularMarketChangePercent: 0,
-    regularMarketTime: '',
-    marketCap: 0,
     logourl: '',
-    regularMarketVolume: 0,
-    regularMarketPreviousClose: 0,
-    regularMarketOpen: 0,
-    averageDailyVolume10Day: 0,
-    averageDailyVolume3Month: 0,
-    fiftyTwoWeekLowChange: 0,
-    fiftyTwoWeekLowChangePercent: 0,
-    fiftyTwoWeekRange: '',
-    fiftyTwoWeekHighChange: 0,
-    fiftyTwoWeekHighChangePercent: 0,
-    fiftyTwoWeekLow: 0,
-    fiftyTwoWeekHigh: 0,
-    twoHundredDayAverage: 0,
-    twoHundredDayAverageChange: 0,
-    twoHundredDayAverageChangePercent: 0,
     dividendsData: {
-      cashDividend: [],
+      cashDividends: [],
       stockDividends: [],
       subscriptions: []
     }
@@ -87,7 +45,8 @@ const initialState: initialStateProps = {
   controls: {
     loading: '',
     message: ''
-  }
+  },
+  staticReducer: []
 };
 
 export const getAssetsThunk = createAsyncThunk(
@@ -106,7 +65,11 @@ export const getAssetsThunk = createAsyncThunk(
 export const AutoPaySlice = createSlice({
   initialState,
   name: 'autopay-slice',
-  reducers: {},
+  reducers: {
+    addOponDate: (state, action) => {
+      state.staticReducer.push(action.payload);
+    }
+  },
   extraReducers(builder) {
     builder.addCase(getAssetsThunk.fulfilled, (state, action) => {
       state.data.shortName = action.payload.shortName;

@@ -1,64 +1,79 @@
-import { useEffect, useState } from 'react';
-import { PlusIcon } from '@heroicons/react/20/solid';
-import { Input } from '../../components/Input/Input';
+import { useState } from 'react';
+import { AutoPaySlice, getAssetsThunk } from './slices/AutoPaySlices';
+import { InputConsumer } from './InputConsumer/InputConsumer';
+import { useAppSelector } from '../../hooks/useAppSelector';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { CurrentAsset } from './CurrentAsset/CurrentAsset';
+import { DividendList } from './DividendList/DividendList';
 import { InfoCell } from '../../components/InfoCell/InfoCell';
-import { CashDividend, getAssetsThunk } from './slices/AutoPaySlices';
-import { useAppDispatch } from '../../store';
-import { useSelector } from 'react-redux';
-import { PaymentDateInfo } from '../../components/PaymentDateInfo/PaymentDateInfo';
 
 export default function AutoPayCalc() {
-  const [inputValue, setInputValue] = useState('');
-  const [ticker, setTicker] = useState('');
+  const [flipInput, setFlipInput] = useState(false);
+  const [asset, setAsset] = useState('');
+  const [openDate, setOpenDate] = useState('');
+  const [quantity, setQuantity] = useState('');
   const dispatch = useAppDispatch();
-  const tickerData = useSelector((store) => store.AutoPayReducer.data);
+  const { data, staticReducer } = useAppSelector((store) => store.AutoPayReducer);
 
-  const handleInputChange = (event) => {
-    setInputValue(event.target.value);
+  const onAssetChose = () => {
+    dispatch(getAssetsThunk(asset));
+  };
+  const onQuantityChose = () => {
+    const inputDate = new Date(openDate);
+
+    const year = inputDate.getUTCFullYear();
+    const month = String(inputDate.getUTCMonth() + 1).padStart(2, '0');
+    const day = String(inputDate.getUTCDate()).padStart(2, '0');
+
+    const formattedTime = '00:00:00.000';
+
+    const formattedDateString = `${year}-${month}-${day}T${formattedTime}Z`;
+
+    dispatch(AutoPaySlice.actions.addOponDate({ openData: formattedDateString, quantity }));
+    setOpenDate('');
+    setQuantity('');
+    setFlipInput(false);
   };
 
-  useEffect(() => {
-    dispatch(getAssetsThunk(ticker));
-  }, [dispatch, ticker]);
-
-  const AddAsset = () => {
-    return (
-      <button
-        onClick={() => setTicker(inputValue)}
-        className='bg-slate-400 hover:bg-slate-600 text-white rounded-full shadow-md focus:outline-none'
-      >
-        <PlusIcon className='w-4 h-4' />
-      </button>
-    );
-  };
-
-  const paymentDate = tickerData.dividendsData?.cashDividends;
-
-  console.log('pd', paymentDate);
+  const totalAmount = staticReducer.reduce(
+    (total, item) => Number(total) + Number(item.quantity),
+    0
+  );
 
   return (
-    <div className='items-center flex  justify-center gap-10 flex-1 h-screen'>
-      <div className='flex flex-col justify-center items-center'>
-        {tickerData.logourl ? (
-          <div>
-            <div className='flex flex-col items-center gap-1 border-b border-slate-400'>
-              <img src={tickerData.logourl} alt='logo' />
-              <p className='text-xs'>{tickerData.shortName}</p>
-            </div>
-            <InfoCell title='Cotação' content={tickerData.regularMarketPrice} />
+    <div className='md:flex justify-center  gap-10 flex-1 h-screen overflow-auto'>
+      <div className=' h-[20%] md:h-full md:flex-1'>
+        {totalAmount !== 0 && <InfoCell title='Quant' content={totalAmount} />}
+      </div>
+      <div className=' h-[80%] md:h-full justify-between md:flex-1 flex flex-col items-center '>
+        <CurrentAsset data={data} />
+        <div className='flex items-end justify-center pb-20'>
+          <div className='w-fit'>
+            <InputConsumer
+              placeholder='Ticker'
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setAsset(e.target.value)}
+              onClick={onAssetChose}
+              value={asset}
+            />
+            {flipInput ? (
+              <InputConsumer
+                placeholder='Quantity'
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setQuantity(e.target.value)}
+                onClick={onQuantityChose}
+                value={quantity}
+              />
+            ) : (
+              <InputConsumer
+                placeholder='2023-10-05'
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setOpenDate(e.target.value)}
+                onClick={() => setFlipInput(true)}
+                value={openDate}
+              />
+            )}
           </div>
-        ) : null}
-        <div className='flex'>
-          <Input onChange={handleInputChange} children={<AddAsset />} value={inputValue} />
         </div>
       </div>
-      <div className='flex gap-10 items-center'>
-        <div className='gap-10 h-96 overflow-auto '>
-          {paymentDate?.map(({ paymentDate, rate }: CashDividend) => {
-            return <PaymentDateInfo paymentDate={paymentDate} amout={rate} />;
-          })}
-        </div>
-      </div>
+      <DividendList data={data} />
     </div>
   );
 }
