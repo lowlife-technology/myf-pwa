@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  * {
+    font-family: 'Krona One', sans-serif !important;
+    background-color: '#F6F6F6';
+    color: '#464646';
+    font-weight: 400;
+    letter-spacing: 0.88px;
+    text-align: left;
+  }
+}
