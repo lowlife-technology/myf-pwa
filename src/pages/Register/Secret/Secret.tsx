@@ -2,34 +2,28 @@ import { useForm } from 'react-hook-form';
 import { Input } from '../../../components/Input/Input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { useEffect, useState } from 'react';
 
-interface PhoneEmailProps {
-  onClick: () => void;
+interface SecretProps {
   onSubmit: () => void;
+  onClick: () => void;
 }
 
 const createRegisterFormSchema = z.object({
-  email: z
+  secret: z
     .string()
-    .nonempty('Wubba lubba email, required!')
-    .email(`This email format is squanchin' wrong!`),
-  phone: z.string().regex(/^\d{11}$/, 'This cell number is way off in another dimension!')
+    .nonempty('You really goofed up. No password, huh?')
+    .min(8, '8 digits or bust!')
+    .max(30, 'Did you try to cram more than 30 digits?')
+    .regex(/[a-z]/, 'At least one tiny lowercase character in that password, okay?')
+    .regex(/[A-Z]/, ' Throw in a big uppercase letter in that password, you know?')
+    .regex(/\d/, 'You gotta include at least one digit in the password!')
+    .regex(/[!@#$%^&*]/, `Don't forget to toss in a special character`)
 });
 
-export default function PhoneEmail({ onClick, onSubmit }: PhoneEmailProps) {
-  const [error, setError] = useState('false');
+export default function Secret({ onSubmit, onClick }: SecretProps) {
   const form = useForm({
     resolver: zodResolver(createRegisterFormSchema)
   });
-
-  // useEffect(() => {
-  //   const validFields = () => {
-  //     return form.formState.errors.phone && form.formState.errors.phone ? 'true' : 'false';
-  //   };
-
-  //   setError(validFields());
-  // }, [form.formState.errors]);
 
   return (
     <div className='flex w-full mt-10 justify-center'>
@@ -37,21 +31,22 @@ export default function PhoneEmail({ onClick, onSubmit }: PhoneEmailProps) {
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className='flex flex-col gap-10'>
             <Input
+              onInputButton={() => {}}
               inputButtonType='button'
               form={form}
-              name='email'
-              label='Your email'
-              placeholder='exemple@email.com'
+              inputType='password'
+              name='secret'
+              label='Create a secret'
+              placeholder='supersecret'
               inputButton
-              inputType='text'
             />
             <Input
-              inputType='text'
               inputButtonType='submit'
+              inputType='password'
               form={form}
-              name='phone'
-              placeholder='00900000000'
-              label='Your phone number'
+              name='repeatSecret'
+              placeholder='try to repeat'
+              label='Repeat'
               inputButton
               onInputButton={onClick}
             />
