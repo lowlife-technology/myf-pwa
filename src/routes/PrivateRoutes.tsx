@@ -1,5 +1,7 @@
 import { Suspense, lazy } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Login } from '../pages/Entrace/EmailPhone/Login';
+import { Secret } from '../pages/Entrace/Secret/Secret';
 
 export default function PrivateRoutes() {
   const Home = lazy(() => import('../pages/Home/Home'));
