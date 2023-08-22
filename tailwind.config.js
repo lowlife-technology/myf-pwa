@@ -13,6 +13,9 @@ export default {
           1: '#E9E6E6',
           2: '#C3C0C0',
           3: '#464646'
+        },
+        red: {
+          1: '#FEA3A3'
         }
       }
     },
@@ -24,6 +27,21 @@ export default {
       ml: ['20px', '27px'],
       xl: ['24px', '30px'],
       lg: ['28px', '30px']
+    },
+
+    animation: {
+      pushPull: 'pushPull 1000ms ease-in-out'
+    },
+
+    keyframes: {
+      pushPull: {
+        ' 0%, 100%': {
+          boxShadow: '0 4px 3px 0px #C3C0C0, 0px -3px 2px #ffffff'
+        },
+        '50%': {
+          boxShadow: 'inset 0 4px 3px 0px #C3C0C0,inset 0px -3px 2px #ffffff'
+        }
+      }
     },
 
     boxShadow: {
