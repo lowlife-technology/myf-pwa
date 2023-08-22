@@ -1,18 +1,22 @@
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import { Text } from '../Text/Text';
+import { IInputProps } from './types';
 
-interface InputProps {
-  onInputButton?: () => void;
-  inputButton?: boolean;
-  label?: string;
-}
-
-export const Input = ({ onInputButton, inputButton, label }: InputProps) => {
+export const Input = ({
+  onInputButton,
+  inputButton,
+  label,
+  ...props
+}: IInputProps) => {
   return (
     <div className='w-full gap-2 flex flex-col'>
       <Text>{label}</Text>
       <div className='flex h-11 p-1 items-center rounded-full w-full shadow-inner justify-between '>
-        <input type='text ' className='bg-transparent placeholder-slate-400 focus:outline-none' />
+        <input
+          type='text '
+          className='bg-transparent 200 p-2 w-full placeholder-slate-400 focus:outline-none'
+          {...props}
+        />
         {inputButton ? (
           <div
             onClick={onInputButton}
