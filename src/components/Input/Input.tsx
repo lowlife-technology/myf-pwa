@@ -1,31 +1,62 @@
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import { Text } from '../Text/Text';
-import { IInputProps } from './types';
+import { useState } from 'react';
+import { FieldValues, UseFormReturn } from 'react-hook-form';
+
+interface InputProps {
+  onInputButton?: () => void;
+  inputButton?: boolean;
+  label?: string;
+  form: UseFormReturn<FieldValues>;
+  name: string;
+  inputType?: string;
+  inputButtonType?: 'button' | 'submit' | 'reset' | undefined;
+  placeholder?: string;
+}
 
 export const Input = ({
   onInputButton,
   inputButton,
+  form,
   label,
-  ...props
-}: IInputProps) => {
+  name,
+  inputType,
+  placeholder,
+  inputButtonType,
+}: InputProps) => {
+  const [isBouncing, setIsBouncing] = useState(false);
+
   return (
     <div className='w-full gap-2 flex flex-col'>
       <Text>{label}</Text>
       <div className='flex h-11 p-1 items-center rounded-full w-full shadow-inner justify-between '>
         <input
-          type='text '
-          className='bg-transparent 200 p-2 w-full placeholder-slate-400 focus:outline-none'
-          {...props}
+          {...form.register(name)}
+          type={inputType}
+          placeholder={placeholder}
+          style={{ paddingLeft: '12px' }}
+          className='bg-transparent focus:outline-none opacity-60 text-grey-3 text-sm w-full placeholder-grey-2'
         />
         {inputButton ? (
-          <div
-            onClick={onInputButton}
-            className='bg-brand-grey1 items-center flex justify-center rounded-full w-8 h-8 shadow-button mr-1 cursor-pointer'
+          <button
+            type={inputButtonType}
+            onClick={() => {
+              onInputButton;
+              setIsBouncing(!isBouncing);
+            }}
+            className={`bg-brand-grey1 items-center flex justify-center rounded-full w-8 h-8 shadow-button mr-1 cursor-pointer ${
+              isBouncing ? 'animate-pushPull' : ''
+            }`}
           >
             <ArrowRightIcon className='w-5 h-5 text-grey-3' />
-          </div>
+          </button>
         ) : null}
       </div>
+      {form.formState.errors[name] && (
+        <Text size='small' color='red-1'>
+          {`${form.formState.errors[name]?.message}` || 'Valor inválido'}
+        </Text>
+      )}
     </div>
   );
 };
