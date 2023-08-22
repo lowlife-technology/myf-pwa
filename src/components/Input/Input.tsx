@@ -9,7 +9,7 @@ interface InputProps {
   label?: string;
   form: UseFormReturn<FieldValues>;
   name: string;
-  disabled?: boolean | FieldError | Merge<FieldError, FieldErrorsImpl> | undefined;
+  disabled?: boolean | FieldError | Merge<FieldError, FieldErrorsImpl>;
   icon?: 'password' | 'aleft' | 'arigth';
   defaultValue?: string;
   passwordMode?: boolean;
@@ -79,7 +79,11 @@ export const Input = ({
         {inputButton ? (
           <button
             type={inputButtonType}
-            disabled={disabled}
+            disabled={
+              typeof disabled === 'boolean'
+                ? disabled
+                : disabled !== undefined && disabled.type === 'manual'
+            }
             onClick={() => {
               onInputButton();
               setIsBouncing(!isBouncing);
