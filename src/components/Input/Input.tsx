@@ -1,7 +1,7 @@
-import { ArrowRightIcon } from '@heroicons/react/24/outline';
+import { ArrowLeftIcon, ArrowRightIcon, EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import { Text } from '../Text/Text';
 import { useState } from 'react';
-import { FieldValues, UseFormReturn } from 'react-hook-form';
+import { FieldError, FieldErrorsImpl, FieldValues, Merge, UseFormReturn } from 'react-hook-form';
 
 interface InputProps {
   onInputButton: () => void;
@@ -9,6 +9,10 @@ interface InputProps {
   label?: string;
   form: UseFormReturn<FieldValues>;
   name: string;
+  disabled?: boolean | FieldError | Merge<FieldError, FieldErrorsImpl> | undefined;
+  icon?: 'password' | 'aleft' | 'arigth';
+  defaultValue?: string;
+  passwordMode?: boolean;
   inputType?: string;
   inputButtonType?: 'button' | 'submit' | 'reset' | undefined;
   placeholder?: string;
@@ -20,11 +24,44 @@ export const Input = ({
   form,
   label,
   name,
+  icon,
+  disabled,
+  passwordMode = false,
   inputType,
+  defaultValue,
   placeholder,
-  inputButtonType,
+  inputButtonType
 }: InputProps) => {
   const [isBouncing, setIsBouncing] = useState(false);
+
+  const iconStyle = `w-5 h-5 ${disabled ? 'text-grey-2' : 'text-grey-3'} `;
+  let iconType = <ArrowRightIcon className={iconStyle} />;
+  const IconType = () => {
+    switch (icon) {
+      case 'aleft':
+        iconType = <ArrowLeftIcon className={iconStyle} />;
+
+        break;
+      case 'arigth':
+        iconType = <ArrowRightIcon className={iconStyle} />;
+        break;
+      case 'password':
+        iconType = (
+          <div>
+            {passwordMode ? (
+              <EyeIcon className={iconStyle} />
+            ) : (
+              <EyeSlashIcon className={iconStyle} />
+            )}
+          </div>
+        );
+        break;
+
+      default:
+        break;
+    }
+    return iconType;
+  };
 
   return (
     <div className='w-full gap-2 flex flex-col'>
@@ -32,8 +69,9 @@ export const Input = ({
       <div className='flex h-11 p-1  items-center rounded-full w-full shadow-inner justify-between '>
         <input
           {...form.register(name)}
-          type={inputType}
-          autoComplete={inputType === 'password' ? 'on' : ''}
+          type={passwordMode ? 'password' : inputType}
+          defaultValue={defaultValue}
+          autoComplete={passwordMode ? 'on' : ''}
           placeholder={placeholder}
           style={{ paddingLeft: '12px' }}
           className='bg-transparent focus:outline-none opacity-60 text-grey-3 text-sm w-full placeholder-grey-2'
@@ -41,6 +79,7 @@ export const Input = ({
         {inputButton ? (
           <button
             type={inputButtonType}
+            disabled={disabled}
             onClick={() => {
               onInputButton();
               setIsBouncing(!isBouncing);
@@ -49,12 +88,12 @@ export const Input = ({
               isBouncing ? 'animate-pushPull' : ''
             }`}
           >
-            <ArrowRightIcon className='w-5 h-5 text-grey-3' />
+            <IconType />
           </button>
         ) : null}
       </div>
       {form.formState.errors[name] && (
-        <Text size='small' color='red-1'>
+        <Text size='small' opacity='easy' color='red-1'>
           {`${form.formState.errors[name]?.message}` || 'Valor inválido'}
         </Text>
       )}

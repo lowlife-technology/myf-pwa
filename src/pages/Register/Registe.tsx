@@ -16,7 +16,7 @@ export default function Register() {
 
   const handleEmailPhoneConfirm = () => {};
   const handleClickBack = () => {
-    console.log('oi');
+    setIsEmailConfirmed(false);
   };
 
   return (
@@ -25,11 +25,13 @@ export default function Register() {
       title={`Register: ${isEmailConfirmed ? 'secret' : 'entrace'}`}
     >
       <div className='w-screen '>
-        {!isEmailConfirmed ? (
-          <PhoneEmail onSubmit={handlePhoneEmailSubmit} onClick={handleEmailPhoneConfirm} />
-        ) : (
-          <Secret onSubmit={handleSecretSubmit} onClick={() => {}} />
-        )}
+        <PhoneEmail
+          hidden={isEmailConfirmed}
+          onSubmit={handlePhoneEmailSubmit}
+          onClick={handleEmailPhoneConfirm}
+        />
+
+        <Secret hidden={!isEmailConfirmed} onSubmit={handleSecretSubmit} onClick={() => {}} />
       </div>
     </PageWrapper>
   );
