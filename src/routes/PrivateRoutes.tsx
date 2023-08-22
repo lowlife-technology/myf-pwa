@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 export default function PrivateRoutes() {
   const Home = lazy(() => import('../pages/Home/Home'));
-  const PhoneEmail = lazy(() => import('../pages/Register/PhoneEmail/PhoneEmail'));
+  const Register = lazy(() => import('../pages/Register/Registe'));
   return (
     <Suspense
       fallback={
@@ -15,7 +15,7 @@ export default function PrivateRoutes() {
       <BrowserRouter>
         <Routes>
           <Route path='/' Component={Home} />
-          <Route path='/register' Component={PhoneEmail} />
+          <Route path='/register' Component={Register} />
         </Routes>
       </BrowserRouter>
     </Suspense>
