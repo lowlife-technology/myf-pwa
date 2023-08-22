@@ -22,7 +22,7 @@ export const Input = ({
   name,
   inputType,
   placeholder,
-  inputButtonType
+  inputButtonType,
 }: InputProps) => {
   const [isBouncing, setIsBouncing] = useState(false);
 
