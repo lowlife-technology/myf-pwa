@@ -9,6 +9,7 @@ interface InputProps {
   label?: string;
   form: UseFormReturn<FieldValues>;
   name: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   disabled?: boolean | FieldError | Merge<FieldError, FieldErrorsImpl>;
   icon?: 'password' | 'aleft' | 'arigth';
   defaultValue?: string;
@@ -25,6 +26,7 @@ export const Input = ({
   label,
   name,
   icon,
+  onChange,
   disabled,
   passwordMode = false,
   inputType,
@@ -73,6 +75,7 @@ export const Input = ({
           defaultValue={defaultValue}
           autoComplete={passwordMode ? 'on' : ''}
           placeholder={placeholder}
+          onChange={onChange}
           style={{ paddingLeft: '12px' }}
           className='bg-transparent focus:outline-none opacity-60 text-grey-3 text-sm w-full placeholder-grey-2'
         />
