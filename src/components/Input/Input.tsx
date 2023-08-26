@@ -5,6 +5,7 @@ export interface InputProps {
   value?: string | number;
   children: ReactNode;
   small?: boolean;
+  pattern?: string;
   placeholder?: string;
   ref?: LegacyRef<HTMLInputElement> | undefined;
 }
@@ -13,6 +14,7 @@ export const Input = ({
   onChange,
   value,
   children,
+  pattern,
   small,
   ref,
   placeholder = 'Enter asset details'
@@ -21,6 +23,7 @@ export const Input = ({
     <div className=' flex items-center justify-center border bg-zinc-300 rounded-md focus:ring-blue-500 focus:border-blue-500 mt-2 px-3 py-1'>
       <input
         ref={ref}
+        pattern={pattern}
         type='text'
         value={value}
         onChange={onChange}

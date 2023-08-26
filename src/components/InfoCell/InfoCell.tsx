@@ -1,15 +1,15 @@
 interface InfoCellProps {
-  title: string;
-  content: string | number;
+  textOne?: string;
+  textTwo?: string;
+  amount?: number | string;
 }
 
-export const InfoCell = ({ title, content }: InfoCellProps) => {
+export const InfoCell = ({ textOne, textTwo, amount }: InfoCellProps) => {
   return (
-    <div className=' flex border-slate-600 gap-2 flex-col items-center'>
-      <div className=' border-b border-slate-400 p-2 '>
-        <p className='text-xs'>{title}</p>
-      </div>
-      <p>{content}</p>
+    <div className=' flex border-slate-600 items-center'>
+      <p className='text-xs'>
+        {textOne} {amount} {textTwo}
+      </p>
     </div>
   );
 };

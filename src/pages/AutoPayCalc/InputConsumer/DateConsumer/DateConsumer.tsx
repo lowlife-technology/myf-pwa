@@ -1,15 +1,14 @@
 import { PlusIcon } from '@heroicons/react/20/solid';
-import { Input } from '../../../components/Input/Input';
-import { ChangeEventHandler } from 'react';
+import { MaskedInput } from '../../../../components/MaskedInput/MaskedInput';
+import { FieldValues, UseFormReturn } from 'react-hook-form';
 
 interface InputConsumerProps {
   onClick?: () => void;
   placeholder?: string;
-  onChange?: ChangeEventHandler;
-  value?: string | number | undefined;
+  form: UseFormReturn<FieldValues>;
 }
 
-export const InputConsumer = ({ placeholder, onClick, onChange, value }: InputConsumerProps) => {
+export const DataConsumer = ({ placeholder, onClick, form }: InputConsumerProps) => {
   const AddAsset = () => {
     return (
       <button
@@ -21,7 +20,5 @@ export const InputConsumer = ({ placeholder, onClick, onChange, value }: InputCo
     );
   };
 
-  return (
-    <Input placeholder={placeholder} onChange={onChange} children={<AddAsset />} value={value} />
-  );
+  return <MaskedInput form={form} placeholder={placeholder} children={<AddAsset />} />;
 };

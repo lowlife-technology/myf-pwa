@@ -5,7 +5,7 @@ import { store } from './store';
 function App() {
   return (
     <Provider store={store}>
-      <div className='flex h-full bg-brand-grey1'>
+      <div className='flex '>
         <Route />
       </div>
     </Provider>

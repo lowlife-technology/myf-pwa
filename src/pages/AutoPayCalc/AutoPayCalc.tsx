@@ -1,53 +1,36 @@
 import { useState } from 'react';
-import { AutoPaySlice, getAssetsThunk } from './slices/AutoPaySlices';
-import { InputConsumer } from './InputConsumer/InputConsumer';
+import { getAssetsThunk } from './slices/AutoPaySlices';
+import { InputConsumer } from './InputConsumer/NormalDataConsumer/InputConsumer';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { CurrentAsset } from './CurrentAsset/CurrentAsset';
 import { DividendList } from './DividendList/DividendList';
-import { InfoCell } from '../../components/InfoCell/InfoCell';
+import { useForm } from 'react-hook-form';
+import { ComplementalInfo } from './ComplementalInfo/ComplementalInfo';
 
 export default function AutoPayCalc() {
   const [flipInput, setFlipInput] = useState(false);
   const [asset, setAsset] = useState('');
-  const [openDate, setOpenDate] = useState('');
   const [quantity, setQuantity] = useState('');
   const dispatch = useAppDispatch();
   const { data, staticReducer } = useAppSelector((store) => store.AutoPayReducer);
 
+  const form = useForm();
+
   const onAssetChose = () => {
     dispatch(getAssetsThunk(asset));
   };
-  const onQuantityChose = () => {
-    const inputDate = new Date(openDate);
-
-    const year = inputDate.getUTCFullYear();
-    const month = String(inputDate.getUTCMonth() + 1).padStart(2, '0');
-    const day = String(inputDate.getUTCDate()).padStart(2, '0');
-
-    const formattedTime = '00:00:00.000';
-
-    const formattedDateString = `${year}-${month}-${day}T${formattedTime}Z`;
-
-    dispatch(AutoPaySlice.actions.addOponDate({ openData: formattedDateString, quantity }));
-    setOpenDate('');
-    setQuantity('');
-    setFlipInput(false);
-  };
-
-  const totalAmount = staticReducer.reduce(
-    (total, item) => Number(total) + Number(item.quantity),
-    0
-  );
 
   return (
-    <div className='md:flex justify-center  gap-10 flex-1 h-screen overflow-auto'>
-      <div className=' h-[20%] md:h-full md:flex-1'>
-        {totalAmount !== 0 && <InfoCell title='Quant' content={totalAmount} />}
+    <div className='md:flex-row justify-center flex flex-col items-center gap-10 flex-1 md:h-screen md:overflow-auto'>
+      <div className='items-center hidden md:flex justify-center md:h-full md:flex-1'>
+        <ComplementalInfo display='hidden md:flex' />
       </div>
-      <div className=' h-[80%] md:h-full justify-between md:flex-1 flex flex-col items-center '>
-        <CurrentAsset data={data} />
-        <div className='flex items-end justify-center pb-20'>
+      <div className='h-screen md:h-full justify-between md:flex-1 flex flex-col items-center '>
+        <CurrentAsset />
+
+        <ComplementalInfo display='flex' />
+        <div className='flex items-end justify-center pb-28'>
           <div className='w-fit'>
             <InputConsumer
               placeholder='Ticker'
@@ -55,21 +38,6 @@ export default function AutoPayCalc() {
               onClick={onAssetChose}
               value={asset}
             />
-            {flipInput ? (
-              <InputConsumer
-                placeholder='Quantity'
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setQuantity(e.target.value)}
-                onClick={onQuantityChose}
-                value={quantity}
-              />
-            ) : (
-              <InputConsumer
-                placeholder='2023-10-05'
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setOpenDate(e.target.value)}
-                onClick={() => setFlipInput(true)}
-                value={openDate}
-              />
-            )}
           </div>
         </div>
       </div>

@@ -3,12 +3,13 @@ import { getAsset } from '../services';
 
 export interface CashDividends {
   paymentDate: Date;
+  lastDatePrior: Date;
   rate: number;
 }
 
 export interface StaticReducerProps {
-  openData: string;
-  quantity: number;
+  proventsTotal: number;
+  quotesTotal: number;
 }
 
 export interface AutoPayInitialStateProps {
@@ -27,7 +28,7 @@ export interface AutoPayInitialStateProps {
     loading: string;
     message: string | undefined;
   };
-  staticReducer: StaticReducerProps[];
+  staticReducer: StaticReducerProps;
 }
 
 const initialState: AutoPayInitialStateProps = {
@@ -46,7 +47,10 @@ const initialState: AutoPayInitialStateProps = {
     loading: '',
     message: ''
   },
-  staticReducer: []
+  staticReducer: {
+    proventsTotal: 0,
+    quotesTotal: 0
+  }
 };
 
 export const getAssetsThunk = createAsyncThunk(
@@ -55,6 +59,7 @@ export const getAssetsThunk = createAsyncThunk(
     try {
       const { data } = await getAsset(ticker);
       const results = data.results[0];
+
       return results;
     } catch (error) {
       return error;
@@ -68,6 +73,13 @@ export const AutoPaySlice = createSlice({
   reducers: {
     addOponDate: (state, action) => {
       state.staticReducer.push(action.payload);
+    },
+
+    addOwnerAmounts: (state, action) => {
+      state.staticReducer.proventsTotal =
+        state.staticReducer.proventsTotal + action.payload.proventsTotal;
+      state.staticReducer.quotesTotal =
+        state.staticReducer.quotesTotal + Number(action.payload.quotesTotal);
     }
   },
   extraReducers(builder) {
