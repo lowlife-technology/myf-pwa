@@ -11,13 +11,7 @@ interface DividendListProps {
 
 export const DividendList = ({ data }: DividendListProps) => {
   return (
-    <div className='md:h-5/6 mb-96 flex flex-col w-fit justify-start md:flex-1 items-center gap-12 '>
-      <div className='flex flex-col items-center '>
-        <a className='font-bold text-xl text-blue-800'>Payout and Bought</a>
-        <p className='text-xs text-center'>
-          Set the stock's amount <br /> you bought berween dates
-        </p>
-      </div>
+    <div className='mb-96 flex flex-col w-fit justify-start md:flex-1 items-center gap-12 '>
       <div className='md:overflow-auto '></div>
       <div className='gap-5 flex flex-col'>
         {data.dividendsData?.cashDividends?.map(

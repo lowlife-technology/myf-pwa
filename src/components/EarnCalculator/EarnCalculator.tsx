@@ -39,7 +39,7 @@ export const EarnCalculator = ({ paymentDate, cost, lastDatePrior }: EarnCalcula
   )}`;
 
   return (
-    <div className={`border-slate-300 flex gap-2`}>
+    <div className={`border-slate-300 items-center flex gap-2`}>
       <div className=''>
         <PaymentDateInfo paymentDate={paymentDate} cost={cost} />
         <div className='flex justify-between'>
@@ -53,7 +53,7 @@ export const EarnCalculator = ({ paymentDate, cost, lastDatePrior }: EarnCalcula
           />
         </div>
       </div>
-      <div>
+      <div className=' items-center flex flex-col'>
         <p>{decimalToBRLCurrency(sumDividends)}</p>
         <button
           onClick={handleAdd}

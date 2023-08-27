@@ -8,7 +8,7 @@ interface HeaderProps {
 export const Header = ({ onClick }: HeaderProps) => {
   const [darkMode, setDarkMode] = useState(false);
   return (
-    <div className={`h-10 p-8 w-screen flex justify-between items-center`}>
+    <div className={`h-[10%] p-8 w-screen flex justify-between items-center`}>
       <img
         src={darkMode ? '../../public/Myf-40x20-white.svg' : '../../../public/Myf-40-20.svg'}
         alt='myf'

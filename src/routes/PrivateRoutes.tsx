@@ -16,7 +16,7 @@ export default function PrivateRoutes() {
       }
     >
       <div
-        className={`flex flex-col transition-colors duration-5000 ${
+        className={`flex h-screen flex-col transition-colors duration-5000 ${
           darkMode ? 'bg-neutral-700' : 'bg-neutral-400'
         }`}
       >

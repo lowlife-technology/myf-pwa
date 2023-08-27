@@ -11,7 +11,7 @@ export const CurrentAsset = () => {
   const vallumn = regular * quotesTotal + proventsTotal;
 
   return (
-    <div className='md:flex-1  flex md:justify-start justify-center md:items-start  pt-10 '>
+    <div className='flex md:justify-start justify-center md:items-start'>
       <div className=' w-fit'>
         {data.logourl ? (
           <div className='flex flex-col items-center gap-2 justify-center'>

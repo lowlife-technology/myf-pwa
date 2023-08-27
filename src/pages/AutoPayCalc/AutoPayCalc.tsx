@@ -1,47 +1,43 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getAssetsThunk } from './slices/AutoPaySlices';
 import { InputConsumer } from './InputConsumer/NormalDataConsumer/InputConsumer';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { CurrentAsset } from './CurrentAsset/CurrentAsset';
 import { DividendList } from './DividendList/DividendList';
-import { useForm } from 'react-hook-form';
 import { ComplementalInfo } from './ComplementalInfo/ComplementalInfo';
+import { Drawer } from '../../components/Drawer/Drawer';
+import ProgressBar, { StackedDataType } from '../../components/ProgressBar';
+import { Chart } from './Chart/Chart';
 
 export default function AutoPayCalc() {
-  const [flipInput, setFlipInput] = useState(false);
   const [asset, setAsset] = useState('');
-  const [quantity, setQuantity] = useState('');
   const dispatch = useAppDispatch();
-  const { data, staticReducer } = useAppSelector((store) => store.AutoPayReducer);
-
-  const form = useForm();
+  const { data } = useAppSelector((store) => store.AutoPayReducer);
 
   const onAssetChose = () => {
     dispatch(getAssetsThunk(asset));
   };
 
   return (
-    <div className='md:flex-row justify-center flex flex-col items-center gap-10 flex-1 md:h-screen md:overflow-auto'>
-      <div className='items-center hidden md:flex justify-center md:h-full md:flex-1'>
-        <ComplementalInfo display='hidden md:flex' />
-      </div>
-      <div className='h-screen md:h-full justify-between md:flex-1 flex flex-col items-center '>
+    <div className='justify-center flex-col items-center flex h-screen md:overflow-auto'>
+      <div className=' justify-between h-full flex flex-col items-center '>
         <CurrentAsset />
-
         <ComplementalInfo display='flex' />
-        <div className='flex items-end justify-center pb-28'>
-          <div className='w-fit'>
-            <InputConsumer
-              placeholder='Ticker'
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setAsset(e.target.value)}
-              onClick={onAssetChose}
-              value={asset}
-            />
-          </div>
-        </div>
       </div>
-      <DividendList data={data} />
+
+      <div className='w-fit flex flex-col justify-center items-center pb-10 gap-10'>
+        <InputConsumer
+          placeholder='Ticker'
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setAsset(e.target.value)}
+          onClick={onAssetChose}
+          value={asset}
+        />
+        <Chart />
+        <Drawer>
+          <DividendList data={data} />
+        </Drawer>
+      </div>
     </div>
   );
 }
