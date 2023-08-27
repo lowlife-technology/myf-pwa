@@ -1,5 +1,5 @@
 import { CashDividends } from '../slices/AutoPaySlices';
-import { EarnCalculator } from '../../../components/EarnCalculator/EarnCalculator';
+import { PaymentDateInfo } from '../../../components/PaymentDateInfo/PaymentDateInfo';
 
 interface DividendListProps {
   data: {
@@ -10,23 +10,16 @@ interface DividendListProps {
 }
 
 export const DividendList = ({ data }: DividendListProps) => {
+  const sortedCashDividends = data.dividendsData?.cashDividends
+    ?.slice() // Make a copy of the array to avoid modifying the original
+    .sort((a, b) => new Date(b.paymentDate).getTime() - new Date(a.paymentDate).getTime());
   return (
     <div className='mb-96 flex flex-col w-fit justify-start md:flex-1 items-center gap-12 '>
       <div className='md:overflow-auto '></div>
       <div className='gap-5 flex flex-col'>
-        {data.dividendsData?.cashDividends?.map(
-          ({ paymentDate, rate, lastDatePrior }: CashDividends, index: number) => {
-            return (
-              <div key={index} className={`border-b border-slate-300`}>
-                <EarnCalculator
-                  cost={rate}
-                  lastDatePrior={lastDatePrior}
-                  paymentDate={paymentDate}
-                />
-              </div>
-            );
-          }
-        )}
+        {sortedCashDividends.map(({ paymentDate, rate }: CashDividends, index: number) => {
+          return <PaymentDateInfo key={index} paymentDate={paymentDate} cost={rate} />;
+        })}
       </div>
     </div>
   );

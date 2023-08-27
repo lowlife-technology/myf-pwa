@@ -6,12 +6,16 @@ interface ComplementalInfo {
 }
 
 export const ComplementalInfo = ({ display }: ComplementalInfo) => {
-  const { quotesTotal } = useAppSelector((store) => store.AutoPayReducer.staticReducer);
+  const { boughtPerMonth } = useAppSelector((store) => store.AutoPayReducer.staticReducer);
+  const quantity = boughtPerMonth.reduce((total, quoteQuantity) => {
+    return total + quoteQuantity.quantity;
+  }, 0);
+
   return (
     <div className={`items-center ${display} justify-center`}>
-      {quotesTotal !== 0 && (
+      {quantity !== 0 && (
         <div>
-          <InfoCell textOne='There is' amount={quotesTotal} textTwo='of quotes' />
+          <InfoCell textOne='There is' amount={quantity} textTwo='of quotes' />
         </div>
       )}
     </div>

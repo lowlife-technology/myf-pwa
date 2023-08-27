@@ -9,19 +9,19 @@ export const Chart = () => {
 
   const { staticReducer, data } = useAppSelector((store) => store.AutoPayReducer);
 
-  const quotesTotal = staticReducer.quotesTotal;
-  const proventsTotal = staticReducer.proventsTotal;
   const regular = data.regularMarketPrice;
 
-  const vallumn = regular * quotesTotal + proventsTotal;
+  const earns = staticReducer.boughtPerMonth.reduce((total, earnPerPurchase) => {
+    return total + earnPerPurchase.receivedAmount;
+  }, 0);
 
-  // vallumn === 100%
-  // quotesTotal * proventsTotal === ao que tem
+  const quantity = staticReducer.boughtPerMonth.reduce((total, quoteQuantity) => {
+    return total + quoteQuantity.quantity;
+  }, 0);
 
-  const oquetem = quotesTotal * proventsTotal;
-  const inCash = Math.floor((vallumn * oquetem) / 100 / 100);
+  const vallumn = quantity * regular + earns;
 
-  // console.log(Math.floor((vallumn * oquetem) / 100 / 100));
+  const inCash = Math.floor(vallumn / 100);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -54,7 +54,7 @@ export const Chart = () => {
       dashStyle: 'Solid',
       color: '#1B49E0',
       label: {
-        text: `${shiftState ? `R$ ${decimalToBRLCurrency(oquetem)}` : `${inCash}%`}`,
+        text: `${shiftState ? `R$ ${decimalToBRLCurrency(earns)}` : `${inCash}%`}`,
         align: 'left',
         x: 10,
         y: -4
@@ -67,8 +67,8 @@ export const Chart = () => {
   return (
     <ProgressBar
       xLegend={['Agora']}
-      chartWidth={200}
-      barWidth={200}
+      chartWidth={220}
+      barWidth={220}
       hight='h-[600px]'
       plotLines={plotLines}
       type='column'

@@ -1,3 +1,4 @@
+import { CalendarIcon } from '@heroicons/react/24/outline';
 import { ReactNode, useState } from 'react';
 import { Tooltip } from 'react-tooltip';
 
@@ -13,16 +14,17 @@ export const Drawer = ({ children }: DrawerProps) => {
   };
 
   return (
-    <div>
+    <div className='absolute top-2/4 right-4'>
       <div className='text-center'>
         <button
           onClick={toggleDrawer}
           data-tooltip-id='payouts'
-          className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800'
+          className='text-white bg-blue-900 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2 mr-2 mb-2 dark:bg-blue-900 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800'
           type='button'
         >
-          <div className='flex items-center space-x-3'>
-            <p>See Payouts and Boughts</p>
+          <div className='text-xs flex-col flex items-center'>
+            <CalendarIcon className='w-5 h-5' />
+            <p>Payouts</p>
           </div>
         </button>
       </div>
@@ -78,9 +80,9 @@ export const Drawer = ({ children }: DrawerProps) => {
           >
             <path
               stroke='currentColor'
-              stroke-linecap='round'
-              stroke-linejoin='round'
-              stroke-width='2'
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              strokeWidth='2'
               d='m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6'
             />
           </svg>

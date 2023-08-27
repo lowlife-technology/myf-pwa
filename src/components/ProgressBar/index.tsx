@@ -81,6 +81,9 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
         text: ''
       }
     },
+    accessibility: {
+      enabled: false
+    },
     plotOptions: {
       bar: {
         stacking: 'normal',
@@ -145,7 +148,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
   };
 
   return (
-    <div className={`${hight} absolute bottom-[170px] items-end flex`}>
+    <div className={`${hight} absolute bottom-[160px] items-end flex`}>
       <HighchartsReact
         containerProps={{ style: { height: containerHeigh } }}
         highcharts={Highcharts}

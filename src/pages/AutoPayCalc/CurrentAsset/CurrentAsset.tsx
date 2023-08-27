@@ -4,12 +4,21 @@ import { useAppSelector } from '../../../hooks/useAppSelector';
 export const CurrentAsset = () => {
   const { staticReducer, data } = useAppSelector((store) => store.AutoPayReducer);
 
-  const quotesTotal = staticReducer.quotesTotal;
-  const proventsTotal = staticReducer.proventsTotal;
-  const regular = data.regularMarketPrice;
+  const earns = staticReducer.boughtPerMonth.reduce((total, earnPerPurchase) => {
+    return total + earnPerPurchase.receivedAmount;
+  }, 0);
 
-  const vallumn = regular * quotesTotal + proventsTotal;
+  const quantity = staticReducer.boughtPerMonth.reduce((total, quoteQuantity) => {
+    return total + quoteQuantity.quantity;
+  }, 0);
 
+  const regular = staticReducer.boughtPerMonth.reduce((total, marketPrice) => {
+    return total + marketPrice.purchaseVolume;
+  }, 0);
+  // console.log('reg', regular);
+  // console.log('SR', staticReducer);
+
+  const vallumn = quantity * regular + earns;
   return (
     <div className='flex md:justify-start justify-center md:items-start'>
       <div className=' w-fit'>

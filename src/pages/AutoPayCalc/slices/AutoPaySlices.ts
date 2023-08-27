@@ -7,9 +7,21 @@ export interface CashDividends {
   rate: number;
 }
 
+export interface receivedValuesPerDatesProps {
+  data: Date;
+  valorRecebido: number;
+}
+
+export interface BoughtPerMonthProps {
+  startDate: Date;
+  quantity: number;
+  regularMarketPrice: number;
+  purchaseVolume: number;
+  receivedAmount: number;
+  valoresRecebidos: receivedValuesPerDatesProps[];
+}
 export interface StaticReducerProps {
-  proventsTotal: number;
-  quotesTotal: number;
+  boughtPerMonth: BoughtPerMonthProps[];
 }
 
 export interface AutoPayInitialStateProps {
@@ -48,8 +60,7 @@ const initialState: AutoPayInitialStateProps = {
     message: ''
   },
   staticReducer: {
-    proventsTotal: 0,
-    quotesTotal: 0
+    boughtPerMonth: []
   }
 };
 
@@ -71,15 +82,8 @@ export const AutoPaySlice = createSlice({
   initialState,
   name: 'autopay-slice',
   reducers: {
-    addOponDate: (state, action) => {
-      state.staticReducer.push(action.payload);
-    },
-
-    addOwnerAmounts: (state, action) => {
-      state.staticReducer.proventsTotal =
-        state.staticReducer.proventsTotal + action.payload.proventsTotal;
-      state.staticReducer.quotesTotal =
-        state.staticReducer.quotesTotal + Number(action.payload.quotesTotal);
+    addOwnerPurchase: (state, action) => {
+      state.staticReducer.boughtPerMonth.push(action.payload);
     }
   },
   extraReducers(builder) {

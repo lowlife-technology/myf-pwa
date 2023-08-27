@@ -4,7 +4,9 @@ export interface InputProps {
   onChange?: ChangeEventHandler<HTMLInputElement>;
   value?: string | number;
   children: ReactNode;
-  small?: boolean;
+  size?: 'small' | 'medium';
+  type?: string;
+  elementPosition?: 'right' | 'left';
   pattern?: string;
   placeholder?: string;
   ref?: LegacyRef<HTMLInputElement> | undefined;
@@ -15,24 +17,27 @@ export const Input = ({
   value,
   children,
   pattern,
-  small,
+  elementPosition = 'right',
+  type,
+  size,
   ref,
   placeholder = 'Enter asset details'
 }: InputProps) => {
   return (
-    <div className=' flex items-center justify-center border bg-zinc-300 rounded-md focus:ring-blue-500 focus:border-blue-500 mt-2 px-3 py-1'>
+    <div className=' flex items-center justify-center border bg-zinc-300 rounded-md focus:ring-blue-500 focus:border-blue-500 px-3 py-1'>
+      <div className={`${elementPosition === 'right' && 'hidden'}`}>{children}</div>
       <input
         ref={ref}
         pattern={pattern}
-        type='text'
+        type={type}
         value={value}
         onChange={onChange}
-        className={`bg-transparent placeholder-slate-400 focus:outline-none ${
-          small ? 'w-10' : ''
+        className={`bg-transparent text-center placeholder-slate-400 focus:outline-none ${
+          size ? (size === 'small' ? 'w-8' : 'w-16') : ''
         } `}
         placeholder={placeholder}
       />
-      {children}
+      <div className={`${elementPosition === 'left' && 'hidden'}`}>{children}</div>
     </div>
   );
 };
