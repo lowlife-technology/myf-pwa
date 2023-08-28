@@ -12,7 +12,7 @@ export const ComplementalInfo = ({ display }: ComplementalInfo) => {
   }, 0);
 
   return (
-    <div className={`items-center ${display} justify-center`}>
+    <div className={`items-center mb-10 ${display} justify-center`}>
       {quantity !== 0 && (
         <div>
           <InfoCell textOne='There is' amount={quantity} textTwo='of quotes' />

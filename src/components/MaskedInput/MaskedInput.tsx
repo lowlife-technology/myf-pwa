@@ -19,11 +19,11 @@ export const MaskedInput = ({ form, small, children, placeholder }: MaskedInputP
           <PatternFormat
             id='date'
             placeholder={placeholder}
-            format={'##/##/####'}
+            format={'##/ ##/ ####'}
             onValueChange={(values) => {
               form.setValue('date', values.value);
             }}
-            className={`bg-transparent placeholder-slate-400 focus:outline-none ${
+            className={`bg-transparent text-center placeholder-slate-400 focus:outline-none ${
               small ? 'w-10' : ''
             } `}
           />

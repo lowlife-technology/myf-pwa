@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { AutoPaySlice, getAssetsThunk } from './slices/AutoPaySlices';
 import { InputConsumer } from './InputConsumer/NormalDataConsumer/InputConsumer';
 import { useAppSelector } from '../../hooks/useAppSelector';
@@ -8,35 +8,46 @@ import { DividendList } from './DividendList/DividendList';
 import { ComplementalInfo } from './ComplementalInfo/ComplementalInfo';
 import { Drawer } from '../../components/Drawer/Drawer';
 import { Chart } from './Chart/Chart';
+import { useForm } from 'react-hook-form';
+import { DataConsumer } from './InputConsumer/DateConsumer/DateConsumer';
 
 export default function AutoPayCalc() {
-  const [boughtDate, setBoughtDate] = useState('');
   const [asset, setAsset] = useState('');
   const [quant, setQuant] = useState(0);
   const [price, setPrice] = useState(0);
+  const [flip, setFlip] = useState(false);
+  const [formateDate, setFormateDate] = useState('');
+  const [formatedDayBought, setFormatedDayBought] = useState<Date | string>('');
+
+  // console.log(formatedDayBought);
 
   const dispatch = useAppDispatch();
 
-  const { cashDividends } = useAppSelector((store) => store.AutoPayReducer.data.dividendsData);
+  const form = useForm();
+
+  const { cashDividends } = useAppSelector((store) => store?.AutoPayReducer?.data?.dividendsData);
   const { data } = useAppSelector((store) => store.AutoPayReducer);
 
   const onAssetChose = () => {
-    dispatch(getAssetsThunk(asset));
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    dispatch<any>(getAssetsThunk(asset));
   };
 
-  console.log('ANTES', boughtDate);
+  // console.log('ANTES', form.getValues('date'));
 
-  const day = boughtDate.slice(8, 10);
-  const month = boughtDate.slice(5, 7);
-  const year = boughtDate.slice(0, 4);
+  useEffect(() => {
+    const day = form.getValues('date')?.slice(4, 8);
+    const month = form.getValues('date')?.slice(2, 4);
+    const year = form.getValues('date')?.slice(0, 2);
 
-  const formateDate = `${year}-${month}-${day}`;
+    const formatedDate = `${year}-${month}-${day}`;
+    setFormateDate(formatedDate);
 
-  console.log('durante', formateDate);
+    const dayBought = new Date(formateDate);
+    setFormatedDayBought(dayBought);
 
-  const formatedDayBought = new Date(formateDate);
-
-  console.log('depois', formatedDayBought);
+    // console.log('depois', formatedDayBought);
+  }, [form.watch('date')]);
 
   const pagamentosFiltrados = cashDividends.filter(
     (pagamento) => new Date(pagamento.paymentDate) > formatedDayBought
@@ -52,7 +63,7 @@ export default function AutoPayCalc() {
 
   const handleAddNewPurchase = () => {
     const newBoughtPerMonthData = {
-      startDate: boughtDate,
+      startDate: formateDate,
       quantity: quant,
       regularMarketPrice: price,
       purchaseVolume: quant * price,
@@ -61,6 +72,10 @@ export default function AutoPayCalc() {
     };
 
     dispatch(AutoPaySlice.actions.addOwnerPurchase(newBoughtPerMonthData));
+
+    setPrice(0);
+    setQuant(0);
+    setFlip(false);
   };
 
   return (
@@ -78,38 +93,39 @@ export default function AutoPayCalc() {
           onClick={onAssetChose}
           value={asset}
         />
-
-        <InputConsumer
-          placeholder='Date da compra'
-          type='date'
-          onChange={(e: ChangeEvent<HTMLInputElement>) => setBoughtDate(e.target.value)}
-          value={boughtDate}
-        />
-        <div className='flex gap-2 items-center'>
-          <InputConsumer
-            type='text'
-            size='small'
-            placeholder='Qtd'
-            onChange={(e: ChangeEvent<HTMLInputElement>) => setQuant(Number(e.target.value))}
-            value={quant < 1 ? '' : quant}
-          />
-          <InputConsumer
-            size='medium'
-            type='number'
-            buttonIcon='text'
-            text='R$'
-            elementPosition='left'
-            placeholder='0.00'
-            onChange={(e: ChangeEvent<HTMLInputElement>) => setPrice(Number(e.target.value))}
-            value={price < 1 ? '' : price}
-          />
-          <button
-            onClick={handleAddNewPurchase}
-            className='p-1 bg-blue-900 text-white rounded-md h-8'
+        {!flip ? (
+          <div
+            className={`flex gap-2 items-center ${data.shortName ? 'opacity-95' : 'opacity-0'}`}
           >
-            add
-          </button>
-        </div>
+            <DataConsumer form={form} placeholder={'00/00/0000'} onClick={() => setFlip(true)} />
+          </div>
+        ) : (
+          <div className='flex gap-2 items-center opacity-95'>
+            <InputConsumer
+              type='text'
+              size='small'
+              placeholder='Qtd'
+              onChange={(e: ChangeEvent<HTMLInputElement>) => setQuant(Number(e.target.value))}
+              value={quant < 1 ? '' : quant}
+            />
+            <InputConsumer
+              size='medium'
+              type='number'
+              buttonIcon='text'
+              text='R$'
+              elementPosition='left'
+              placeholder='0.00'
+              onChange={(e: ChangeEvent<HTMLInputElement>) => setPrice(Number(e.target.value))}
+              value={price < 1 ? '' : price}
+            />
+            <button
+              onClick={handleAddNewPurchase}
+              className='p-1 bg-blue-900 text-white rounded-md h-8'
+            >
+              add
+            </button>
+          </div>
+        )}
         <Chart />
         <Drawer>
           <DividendList data={data} />

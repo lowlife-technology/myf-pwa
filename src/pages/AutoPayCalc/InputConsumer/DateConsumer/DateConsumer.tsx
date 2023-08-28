@@ -13,7 +13,7 @@ export const DataConsumer = ({ placeholder, onClick, form }: InputConsumerProps)
     return (
       <button
         onClick={onClick}
-        className='bg-slate-400 hover:bg-slate-600 text-white rounded-full shadow-md focus:outline-none'
+        className='bg-slate-400  hover:bg-slate-600 text-white rounded-full shadow-md focus:outline-none'
       >
         <PlusIcon className='w-4 h-4' />
       </button>
