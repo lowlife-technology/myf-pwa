@@ -1,5 +1,5 @@
 import { set, useForm } from 'react-hook-form';
-import { Input } from '../../../components/Input/Input';
+import { Input } from '../../../components/Input/InputSmooth';
 import { PageWrapper } from '../../../components/PageWrapper/PageWrapper';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';

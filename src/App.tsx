@@ -1,10 +1,14 @@
+import { Provider } from 'react-redux';
 import Route from './routes';
+import { store } from './store';
 
 function App() {
   return (
-    <div className='flex h-full bg-brand-grey1'>
-      <Route />
-    </div>
+    <Provider store={store}>
+      <div className='flex '>
+        <Route />
+      </div>
+    </Provider>
   );
 }
 
