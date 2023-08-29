@@ -1,9 +1,12 @@
-import { set, useForm } from 'react-hook-form';
-import { Input } from '../../../components/Input/InputSmooth';
+import { useForm } from 'react-hook-form';
+import { Input } from '../../../components/Input/Input';
 import { PageWrapper } from '../../../components/PageWrapper/PageWrapper';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../../../hooks/useAppDispatch';
+import { EntraceSlice } from '../slice/EntraceSlice';
 
 const LoginSchemaValidation = z.object({
   email: z
@@ -16,6 +19,9 @@ const LoginSchemaValidation = z.object({
 export default function Login() {
   const [name, setName] = useState('email');
   const [isUser, setIsUser] = useState(true);
+  const navigate = useNavigate();
+
+  const dispatch = useAppDispatch();
 
   const form = useForm({
     resolver: zodResolver(LoginSchemaValidation)
@@ -44,6 +50,11 @@ export default function Login() {
     }
   };
 
+  const onLogin = () => {
+    dispatch(EntraceSlice.actions.setAuth(true));
+    navigate('/');
+  };
+
   return (
     <PageWrapper
       title={`${isUser ? 'Login' : 'Secret'}`}
@@ -68,7 +79,7 @@ export default function Login() {
               name='password'
               inputType='password'
               inputButtonType='submit'
-              onInputButton={() => {}}
+              onInputButton={onLogin}
               label='Secret'
               inputButton
             />

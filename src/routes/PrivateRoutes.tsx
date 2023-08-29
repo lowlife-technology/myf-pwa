@@ -5,7 +5,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 export default function PrivateRoutes() {
   // const [darkMode, setDarkMode] = useState(false);
   const Home = lazy(() => import('../pages/Home/Home'));
-  // const AutoPay = lazy(() => import('../pages/AutoPayCalc/AutoPayCalc'));
+  const AutoPay = lazy(() => import('../pages/AutoPayCalc/AutoPayCalc'));
 
   const Register = lazy(() => import('../pages/Register/Registe'));
   return (
@@ -33,6 +33,7 @@ export default function PrivateRoutes() {
         <Routes>
           <Route path='/' Component={Home} />
           <Route path='/register' Component={Register} />
+          <Route path='/AutoPay' element={<AutoPay />} />
         </Routes>
       </BrowserRouter>
     </Suspense>

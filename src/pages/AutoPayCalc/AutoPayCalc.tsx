@@ -75,7 +75,7 @@ export default function AutoPayCalc() {
   };
 
   return (
-    <div className='justify-center flex-col items-center flex h-full md:overflow-auto'>
+    <div className='flex flex-col items-center justify-center  w-full h-screen md:overflow-auto'>
       <div className=' justify-between h-full flex flex-col items-center '>
         <CurrentAsset />
         <ComplementalInfo display='flex' />

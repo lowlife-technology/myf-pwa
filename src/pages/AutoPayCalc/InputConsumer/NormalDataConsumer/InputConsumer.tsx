@@ -1,6 +1,6 @@
 import { PlusIcon } from '@heroicons/react/20/solid';
-import { Input } from '../../../../components/Input/InputSmooth';
 import { ChangeEventHandler, KeyboardEventHandler } from 'react';
+import { InputSmooth } from '../../../../components/Input/InputSmooth';
 
 interface InputConsumerProps {
   onClick?: () => void;
@@ -47,7 +47,7 @@ export const InputConsumer = ({
   };
 
   return (
-    <Input
+    <InputSmooth
       placeholder={placeholder}
       size={size}
       maxLength={maxLength}

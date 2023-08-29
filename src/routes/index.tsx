@@ -1,7 +1,8 @@
+import { useAppSelector } from '../hooks/useAppSelector';
 import PrivateRoutes from './PrivateRoutes';
 import PublicRoutes from './PublicRoutes';
 
 export default function Route() {
-  const loged = false;
-  return !loged ? <PublicRoutes /> : <PrivateRoutes />;
+  const { isAuth } = useAppSelector((store) => store.EntraceReducer);
+  return !isAuth ? <PublicRoutes /> : <PrivateRoutes />;
 }
