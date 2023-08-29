@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
-import { Input } from '../../../components/Input/InputSmooth';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { Input } from '../../../components/Input/Input';
 
 interface PhoneEmailProps {
   onClick: () => void;

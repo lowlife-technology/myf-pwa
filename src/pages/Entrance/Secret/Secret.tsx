@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
-import { Input } from '../../../components/Input/InputSmooth';
 import { PageWrapper } from '../../../components/PageWrapper/PageWrapper';
 import { useNavigate } from 'react-router-dom';
+import { Input } from '../../../components/Input/Input';
 
 export default function Secret() {
   const navigate = useNavigate();

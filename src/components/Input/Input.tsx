@@ -3,7 +3,7 @@ import { Text } from '../Text/Text';
 import { useState } from 'react';
 import { FieldError, FieldErrorsImpl, FieldValues, Merge, UseFormReturn } from 'react-hook-form';
 
-interface Input {
+interface InputProps {
   onInputButton: () => void;
   inputButton?: boolean;
   label?: string;
