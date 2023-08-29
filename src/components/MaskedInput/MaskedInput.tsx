@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { KeyboardEventHandler, ReactNode } from 'react';
 import { Controller, FieldValues, UseFormReturn } from 'react-hook-form';
 import { PatternFormat } from 'react-number-format';
 
@@ -6,10 +6,17 @@ interface MaskedInputProps {
   form: UseFormReturn<FieldValues>;
   small?: boolean;
   children?: ReactNode;
+  onKeyDown?: KeyboardEventHandler<HTMLInputElement> | undefined;
   placeholder?: string;
 }
 
-export const MaskedInput = ({ form, small, children, placeholder }: MaskedInputProps) => {
+export const MaskedInput = ({
+  form,
+  small,
+  onKeyDown,
+  children,
+  placeholder
+}: MaskedInputProps) => {
   return (
     <div className=' flex items-center justify-center border bg-zinc-300 rounded-md focus:ring-blue-500 focus:border-blue-500 mt-2 px-3 py-1'>
       <Controller
@@ -19,6 +26,7 @@ export const MaskedInput = ({ form, small, children, placeholder }: MaskedInputP
           <PatternFormat
             id='date'
             placeholder={placeholder}
+            onKeyDown={onKeyDown}
             format={'##/ ##/ ####'}
             onValueChange={(values) => {
               form.setValue('date', values.value);

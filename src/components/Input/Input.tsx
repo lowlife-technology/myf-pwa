@@ -1,4 +1,4 @@
-import { ChangeEventHandler, LegacyRef, ReactNode } from 'react';
+import { ChangeEventHandler, KeyboardEventHandler, LegacyRef, ReactNode } from 'react';
 
 export interface InputProps {
   onChange?: ChangeEventHandler<HTMLInputElement>;
@@ -6,6 +6,8 @@ export interface InputProps {
   children: ReactNode;
   size?: 'small' | 'medium';
   type?: string;
+  onKeyDown?: KeyboardEventHandler<HTMLInputElement> | undefined;
+  maxLength?: number;
   elementPosition?: 'right' | 'left';
   pattern?: string;
   placeholder?: string;
@@ -17,6 +19,8 @@ export const Input = ({
   value,
   children,
   pattern,
+  maxLength,
+  onKeyDown,
   elementPosition = 'right',
   type,
   size,
@@ -29,9 +33,11 @@ export const Input = ({
       <input
         ref={ref}
         pattern={pattern}
+        onKeyDown={onKeyDown}
         type={type}
         value={value}
         onChange={onChange}
+        maxLength={maxLength}
         className={`bg-transparent text-center placeholder-slate-400 focus:outline-none ${
           size ? (size === 'small' ? 'w-8' : 'w-16') : ''
         } `}

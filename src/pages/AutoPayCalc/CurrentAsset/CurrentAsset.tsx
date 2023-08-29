@@ -10,10 +10,6 @@ export const CurrentAsset = () => {
     return total + earnPerPurchase.receivedAmount;
   }, 0);
 
-  // const quantity = staticReducer.boughtPerMonth.reduce((total, quoteQuantity) => {
-  //   return total + quoteQuantity.quantity;
-  // }, 0);
-
   const regular = staticReducer.boughtPerMonth.reduce((total, marketPrice) => {
     return total + marketPrice.purchaseVolume;
   }, 0);

@@ -1,6 +1,6 @@
 import { PlusIcon } from '@heroicons/react/20/solid';
 import { Input } from '../../../../components/Input/Input';
-import { ChangeEventHandler } from 'react';
+import { ChangeEventHandler, KeyboardEventHandler } from 'react';
 
 interface InputConsumerProps {
   onClick?: () => void;
@@ -8,6 +8,8 @@ interface InputConsumerProps {
   pattern?: string;
   type?: string;
   text?: string;
+  onKeyDown?: KeyboardEventHandler<HTMLInputElement> | undefined;
+  maxLength?: number;
   elementPosition?: 'left' | 'right';
   size?: 'small' | 'medium';
   buttonIcon?: 'add' | 'text';
@@ -21,6 +23,8 @@ export const InputConsumer = ({
   onChange,
   value,
   size,
+  onKeyDown,
+  maxLength,
   elementPosition,
   text,
   type,
@@ -46,6 +50,8 @@ export const InputConsumer = ({
     <Input
       placeholder={placeholder}
       size={size}
+      maxLength={maxLength}
+      onKeyDown={onKeyDown}
       elementPosition={elementPosition}
       onChange={onChange}
       children={buttonIcon && <AddAsset />}

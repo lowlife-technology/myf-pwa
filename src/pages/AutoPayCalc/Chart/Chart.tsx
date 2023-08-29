@@ -141,7 +141,7 @@ export const Chart = () => {
       xLegend={['Agora']}
       chartWidth={220}
       barWidth={220}
-      hight='h-[650px]'
+      hight='h-[550px]'
       plotLines={plotLines}
       type='column'
       stackedData={[{ data: stacks }] as StackedDataType}

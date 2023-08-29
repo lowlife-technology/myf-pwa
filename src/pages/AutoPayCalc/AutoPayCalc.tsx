@@ -38,24 +38,18 @@ export default function AutoPayCalc() {
 
     const formatedDate = `${day}-${month}-${year}`;
 
-    console.log('formate', formatedDate);
-    // setFormateDate(formatedDate);
+    setFormateDate(formatedDate);
 
     const dayBought = new Date(formatedDate);
     setFormatedDayBought(dayBought);
   }, [form, quant]);
 
   const pagamentosFiltrados = cashDividends.filter(
-    (pagamento) => new Date(pagamento.paymentDate) > formatedDayBought
+    (pagamento) => new Date(pagamento.lastDatePrior) > formatedDayBought
   );
 
-  // console.log('income', new Date(cashDividends[0]?.paymentDate));
-  // console.log('useDAte', formatedDayBought);
-
-  // console.log('valor', pagamentosFiltrados);
-
   const valoresRecebidos = pagamentosFiltrados.map((pagamento) => ({
-    data: new Date(pagamento.paymentDate),
+    data: new Date(pagamento.lastDatePrior),
     valorRecebido: pagamento.rate * quant
   }));
 
@@ -81,16 +75,20 @@ export default function AutoPayCalc() {
   };
 
   return (
-    <div className='justify-center flex-col items-center flex h-screen md:overflow-auto'>
+    <div className='justify-center flex-col items-center flex h-full md:overflow-auto'>
       <div className=' justify-between h-full flex flex-col items-center '>
         <CurrentAsset />
         <ComplementalInfo display='flex' />
       </div>
-
-      <div className='w-fit flex flex-col justify-center items-center pb-10 gap-2'>
+      <Chart />
+      <div className='w-fit flex flex-col justify-center items-center pb-28 gap-2'>
         <InputConsumer
           placeholder='Ticker'
           buttonIcon='add'
+          maxLength={6}
+          onKeyDown={(e) => {
+            e.key === 'Enter' && onAssetChose();
+          }}
           onChange={(e: ChangeEvent<HTMLInputElement>) => setAsset(e.target.value)}
           onClick={onAssetChose}
           value={asset}
@@ -99,13 +97,20 @@ export default function AutoPayCalc() {
           <div
             className={`flex gap-2 items-center ${data.shortName ? 'opacity-95' : 'opacity-0'}`}
           >
-            <DataConsumer form={form} placeholder={'00/00/0000'} onClick={() => setFlip(true)} />
+            <DataConsumer
+              onKeyDown={(e) => {
+                e.key === 'Enter' && setFlip(true);
+              }}
+              form={form}
+              placeholder={'00/00/0000'}
+              onClick={() => setFlip(true)}
+            />
           </div>
         ) : (
           <div className='flex gap-2 items-center opacity-95'>
             <InputConsumer
-              type='text'
-              size='small'
+              type='number'
+              size='medium'
               placeholder='Qtd'
               onChange={(e: ChangeEvent<HTMLInputElement>) => setQuant(Number(e.target.value))}
               value={quant < 1 ? '' : quant}
@@ -115,6 +120,9 @@ export default function AutoPayCalc() {
               type='number'
               buttonIcon='text'
               text='R$'
+              onKeyDown={(e) => {
+                e.key === 'Enter' && handleAddNewPurchase();
+              }}
               elementPosition='left'
               placeholder='0.00'
               onChange={(e: ChangeEvent<HTMLInputElement>) => setPrice(Number(e.target.value))}
@@ -128,7 +136,6 @@ export default function AutoPayCalc() {
             </button>
           </div>
         )}
-        <Chart />
         <Drawer>
           <DividendList data={data} />
         </Drawer>
