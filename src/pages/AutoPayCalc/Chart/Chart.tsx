@@ -40,13 +40,10 @@ export const Chart = () => {
     const interval2 = setInterval(() => {
       if (trisal === 0) {
         setTrisal(1);
-        console.log('zero');
       } else if (trisal === 1) {
         setTrisal(2);
-        console.log('um');
       } else if (trisal === 2) {
         setTrisal(0);
-        console.log('dois');
       }
     }, 8000);
     return () => {

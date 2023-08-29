@@ -19,8 +19,6 @@ export default function AutoPayCalc() {
   const [formateDate, setFormateDate] = useState('');
   const [formatedDayBought, setFormatedDayBought] = useState<Date | string>('');
 
-  // console.log(formatedDayBought);
-
   const dispatch = useAppDispatch();
 
   const form = useForm();
@@ -33,25 +31,26 @@ export default function AutoPayCalc() {
     dispatch<any>(getAssetsThunk(asset));
   };
 
-  // console.log('ANTES', form.getValues('date'));
-
   useEffect(() => {
     const day = form.getValues('date')?.slice(4, 8);
     const month = form.getValues('date')?.slice(2, 4);
     const year = form.getValues('date')?.slice(0, 2);
 
     const formatedDate = `${year}-${month}-${day}`;
+
     setFormateDate(formatedDate);
 
-    const dayBought = new Date(formateDate);
+    const dayBought = new Date(formatedDate);
     setFormatedDayBought(dayBought);
-
-    // console.log('depois', formatedDayBought);
-  }, [form.watch('date')]);
+  }, [form, quant]);
 
   const pagamentosFiltrados = cashDividends.filter(
     (pagamento) => new Date(pagamento.paymentDate) > formatedDayBought
   );
+
+  console.log('income', new Date(cashDividends[0]?.paymentDate));
+  console.log('useDAte', formatedDayBought);
+
   const valoresRecebidos = pagamentosFiltrados.map((pagamento) => ({
     data: new Date(pagamento.paymentDate),
     valorRecebido: pagamento.rate * quant
