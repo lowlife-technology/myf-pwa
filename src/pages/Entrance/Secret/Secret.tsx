@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import { Input } from '../../../components/Input/Input';
+import { Input } from '../../../components/Input/InputSmooth';
 import { PageWrapper } from '../../../components/PageWrapper/PageWrapper';
 import { useNavigate } from 'react-router-dom';
 

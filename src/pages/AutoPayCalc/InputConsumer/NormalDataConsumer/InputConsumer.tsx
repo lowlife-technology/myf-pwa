@@ -1,5 +1,5 @@
 import { PlusIcon } from '@heroicons/react/20/solid';
-import { Input } from '../../../../components/Input/Input';
+import { Input } from '../../../../components/Input/InputSmooth';
 import { ChangeEventHandler, KeyboardEventHandler } from 'react';
 
 interface InputConsumerProps {
