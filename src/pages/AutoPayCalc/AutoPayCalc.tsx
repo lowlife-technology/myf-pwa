@@ -36,9 +36,10 @@ export default function AutoPayCalc() {
     const month = form.getValues('date')?.slice(2, 4);
     const year = form.getValues('date')?.slice(0, 2);
 
-    const formatedDate = `${year}-${month}-${day}`;
+    const formatedDate = `${day}-${month}-${year}`;
 
-    setFormateDate(formatedDate);
+    console.log('formate', formatedDate);
+    // setFormateDate(formatedDate);
 
     const dayBought = new Date(formatedDate);
     setFormatedDayBought(dayBought);
@@ -48,8 +49,10 @@ export default function AutoPayCalc() {
     (pagamento) => new Date(pagamento.paymentDate) > formatedDayBought
   );
 
-  console.log('income', new Date(cashDividends[0]?.paymentDate));
-  console.log('useDAte', formatedDayBought);
+  // console.log('income', new Date(cashDividends[0]?.paymentDate));
+  // console.log('useDAte', formatedDayBought);
+
+  // console.log('valor', pagamentosFiltrados);
 
   const valoresRecebidos = pagamentosFiltrados.map((pagamento) => ({
     data: new Date(pagamento.paymentDate),

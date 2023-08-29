@@ -12,8 +12,6 @@ export const PaymentDateInfo = ({ paymentDate, cost }: InfoCellProps) => {
     7
   )}/${stringedDate.slice(0, 4)}`;
 
-  console.log(paymentDate);
-
   return (
     <div className='flex items-center justify-between space-x-10 rounded transition duration-300'>
       <p className='text-sm font-medium text-slate-500'>{formatedDate}</p>
