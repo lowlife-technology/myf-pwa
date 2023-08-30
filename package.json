@@ -12,9 +12,9 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.0.18",
+    "@hookform/resolvers": "^3.2.0",
     "@reduxjs/toolkit": "^1.9.5",
     "@types/react-redux": "^7.1.25",
-    "@hookform/resolvers": "^3.2.0",
     "autoprefixer": "^10.4.15",
     "axios": "^1.4.0",
     "highcharts": "^11.1.0",
@@ -27,6 +27,7 @@
     "react-redux": "^8.1.2",
     "react-router-dom": "^6.15.0",
     "react-tooltip": "^5.21.1",
+    "swiper": "^10.2.0",
     "tailwindcss": "^3.3.3",
     "zod": "^3.22.2"
   },
