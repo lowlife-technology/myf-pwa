@@ -1,13 +1,18 @@
-import { ReactNode } from 'react';
+import { DetailedHTMLProps, HTMLAttributes, ReactNode } from 'react';
 
-interface TextProps {
+interface TextProps
+  extends Omit<
+    DetailedHTMLProps<HTMLAttributes<HTMLParagraphElement>, HTMLParagraphElement>,
+    'children' | 'className'
+  > {
   size?: 'mini' | 'small' | 'large' | 'extraLarge';
-  children: ReactNode;
+  children?: ReactNode;
   opacity?: 'massive' | 'normal' | 'easy';
   color?: 'red-1' | 'grey-1' | 'grey-2';
+  className?: string;
 }
 
-export const Text = ({ size, children, opacity, color }: TextProps) => {
+export const Text = ({ size, children, opacity, color, className, ...rest }: TextProps) => {
   let textSize = 'text-md';
   let textColor = 'text-grey3';
   let textOpacity = 'text-md';
@@ -68,7 +73,10 @@ export const Text = ({ size, children, opacity, color }: TextProps) => {
   textColors();
 
   return (
-    <p className={`text-grey-3 ${textSize} ${textOpacity} ${textColor} opacity-60 font-normal`}>
+    <p
+      {...rest}
+      className={`text-grey-3 ${textSize} ${textOpacity} ${textColor} opacity-60 font-normal ${className}`}
+    >
       {children}
     </p>
   );

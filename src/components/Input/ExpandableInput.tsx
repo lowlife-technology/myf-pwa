@@ -33,6 +33,7 @@ export const ExpandableInput = ({
 }: InputProps) => {
   const [selectedColor, setSelectedColor] = useState('bg-blue-1');
   const [expand, setExpand] = useState(false);
+  const [categoryId, setCategoryId] = useState(0);
 
   const categBtns = [
     {
@@ -64,7 +65,7 @@ export const ExpandableInput = ({
   const hadlerCategory = (item: string, category_id: number) => {
     setSelectedColor(item);
     setExpand(!expand);
-    console.log(category_id);
+    setCategoryId(category_id);
   };
 
   return (
@@ -86,20 +87,20 @@ export const ExpandableInput = ({
             onClick={() => setExpand(!expand)}
             className={`${
               expand ? 'w-full gap-4 px-2 py-4' : 'w-6'
-            } h-6 justify-between rounded-full jus bg-transparent items-center shadow-button mr-1 cursor-pointer flex`}
+            } h-6 justify-between rounded-full  bg-transparent items-center shadow-inner mr-1 cursor-pointer flex`}
           >
             {categBtns.map(({ color, category_id }, index: number) => {
               return (
-                <div className='w-6 h-6' key={index}>
+                <div className='w-6 h-6 drop-shadow-md' key={index}>
                   <button
                     type={inputButtonType}
                     onClick={() => {
                       hadlerCategory(color, category_id);
                       onClick(category_id);
                     }}
-                    className={`w-6 h-6 ${expand ? color : selectedColor} ${
-                      expand ? null : selectedColor === color ? '' : 'hidden'
-                    } rounded-full`}
+                    className={`w-6 h-6 ${expand ? 'shadow-button' : 'drop-shadow-xl'} ${
+                      expand ? color : selectedColor
+                    } ${expand ? null : selectedColor === color ? '' : 'hidden'} rounded-full`}
                   ></button>
                 </div>
               );
