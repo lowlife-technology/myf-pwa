@@ -29,13 +29,18 @@ export default function PrivateRoutes() {
           </Routes>
         </BrowserRouter>
       </div> */}
-      <BrowserRouter>
-        <Routes>
-          <Route path='/' Component={Home} />
-          <Route path='/register' Component={Register} />
-          <Route path='/AutoPay' element={<AutoPay />} />
-        </Routes>
-      </BrowserRouter>
+
+      <div className='w-screen h-screen flex justify-center items-center '>
+        <div className='w-[90%] h-[95%]'>
+          <BrowserRouter>
+            <Routes>
+              <Route path='/' Component={Home} />
+              <Route path='/register' Component={Register} />
+              <Route path='/AutoPay' element={<AutoPay />} />
+            </Routes>
+          </BrowserRouter>
+        </div>
+      </div>
     </Suspense>
   );
 }

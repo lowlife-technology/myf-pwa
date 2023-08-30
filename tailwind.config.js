@@ -16,6 +16,15 @@ export default {
         },
         red: {
           1: '#FEA3A3'
+        },
+        lilac: {
+          1: '#CBB2EA'
+        },
+        blue: {
+          1: '#88B2C9'
+        },
+        jade: {
+          1: '#C1E1C1'
         }
       }
     },
