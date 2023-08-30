@@ -34,6 +34,7 @@ export const ExpandableInput = ({
   const [selectedColor, setSelectedColor] = useState('bg-blue-1');
   const [expand, setExpand] = useState(false);
   const [categoryId, setCategoryId] = useState(0);
+  console.log(categoryId);
 
   const categBtns = [
     {
