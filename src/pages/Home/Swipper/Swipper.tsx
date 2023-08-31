@@ -1,11 +1,12 @@
 import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
 
-import { Autoplay } from 'swiper/modules';
-import 'swiper/css';
+import { Autoplay, EffectFade } from 'swiper/modules';
 import { useState } from 'react';
 import { Charts } from './Charts/Charts';
 import { useAppSelector } from '../../../hooks/useAppSelector';
 
+import 'swiper/css';
+import 'swiper/css/effect-fade';
 interface SwipperProps {
   onSlideChange: (swiper: SwiperClass) => void;
 }
@@ -21,17 +22,17 @@ export const Swipper = ({ onSlideChange }: SwipperProps) => {
   };
   return (
     <Swiper
-      modules={[Autoplay]}
+      modules={[Autoplay, EffectFade]}
       spaceBetween={50}
       slidesPerView={1}
+      effect={'fade'}
       fadeEffect={{ crossFade: true }}
-      effect='fade'
-      autoplay={{ delay: 20000, disableOnInteraction: false, pauseOnMouseEnter: true }}
+      autoplay={{ delay: 60000, disableOnInteraction: false, pauseOnMouseEnter: true }}
       onSlideChange={(e: SwiperClass) => {
         onSlideChange(e);
         onChangeSlide(e);
       }}
-      className={`md:h-full  ${
+      className={`md:h-full mySwiper  ${
         slideIndex === 2 || slideIndex === 3 || slideIndex === 4 ? 'w-screen h-screen' : ' '
       }`}
       onSwiper={(swiper) => console.log(swiper)}
@@ -97,12 +98,27 @@ export const Swipper = ({ onSlideChange }: SwipperProps) => {
         />
       </SwiperSlide>
       <SwiperSlide>
+        <video autoPlay loop muted width={'4500px'} height={'100%'}>
+          <source src='../../../../public/pakistan.mp4' type='video/mp4' />
+        </video>
+      </SwiperSlide>
+      <SwiperSlide>
         <div
           className={` ${
             boughtPerMonth[0]?.valoresRecebidos ? '' : 'hidden'
           } w-full h-full flex justify-center`}
         >
           <Charts />
+        </div>
+      </SwiperSlide>
+      <SwiperSlide>
+        <div className='w-full h-full flex items-center justify-center'>
+          <img
+            src='https://scontent.fcpq7-1.fna.fbcdn.net/v/t39.30808-6/372989681_10160818022711212_8010613960641411570_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=49d041&_nc_ohc=ehpk20efz6QAX8RtsB3&_nc_ht=scontent.fcpq7-1.fna&oh=00_AfBKQJlsNz7sSKHI3CfsFODrLPtV6m8zPT80mnxCQyeSpQ&oe=64F531BE'
+            alt='slide10'
+            height={'auto'}
+            width={490}
+          />
         </div>
       </SwiperSlide>
     </Swiper>

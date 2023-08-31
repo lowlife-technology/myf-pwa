@@ -77,7 +77,7 @@ export const Input = ({
           placeholder={placeholder}
           onChange={onChange}
           style={{ paddingLeft: '12px' }}
-          className='bg-transparent focus:outline-none opacity-60 text-grey-3 text-sm w-full placeholder-grey-2'
+          className='bg-transparent focus:outline-none opacity-60 text-grey-3 text-sm w-full placeholder-grey-2 appearance-none'
         />
         {inputButton ? (
           <button
