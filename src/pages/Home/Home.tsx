@@ -9,9 +9,9 @@ export default function Home() {
   const [videoTime, setVideoTime] = useState(0);
   const form = useForm();
 
-  const handleSlide = (e: SwiperClass) => {
-    console.log(e.activeIndex);
+  const videoSlides = videoTime === 2 || videoTime === 3 || videoTime === 4 || videoTime === 7;
 
+  const handleSlide = (e: SwiperClass) => {
     setVideoTime(e.activeIndex);
   };
   const handleCategorySelect = (id: number) => {
@@ -20,15 +20,11 @@ export default function Home() {
   return (
     <div className='flex flex-col h-full w-full'>
       <HomeHeader />
-      <div className='flex h-full items-start gap-2 md:h-4/5'>
+      <div className='flex h-full items-start justify-between gap-2 xl:h-4/5'>
         <FormBalance form={form} onClick={handleCategorySelect} />
         <div
-          className={` hidden  ${
-            videoTime === 2 || videoTime === 3 || videoTime === 4 ? '' : 'md:w-4/5 h-4/5'
-          } md:block ${
-            videoTime === 2 || videoTime === 3 || videoTime === 4
-              ? 'absolute top-0 left-0 -z-10 w-screen h-screen'
-              : ''
+          className={` hidden  ${videoSlides ? '' : 'xl:w-3/4 h-4/5'} xl:block ${
+            videoSlides ? 'absolute top-0 left-0 -z-10 w-screen h-screen' : ''
           } `}
         >
           <Swipper onSlideChange={handleSlide} />

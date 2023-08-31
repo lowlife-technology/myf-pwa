@@ -16,20 +16,6 @@ export default function PrivateRoutes() {
         </div>
       }
     >
-      {/* <div
-        className={`flex h-screen flex-col pt-10 transition-colors duration-5000 ${
-          darkMode ? 'bg-neutral-700' : 'bg-neutral-400'
-        }`}
-      >
-        <Header onClick={() => setDarkMode(!darkMode)} />
-        <BrowserRouter>
-          <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='/AutoPay' element={<AutoPay />} />
-          </Routes>
-        </BrowserRouter>
-      </div> */}
-
       <div className='w-screen h-screen flex justify-center items-center '>
         <div className='w-[90%] h-[95%]'>
           <BrowserRouter>

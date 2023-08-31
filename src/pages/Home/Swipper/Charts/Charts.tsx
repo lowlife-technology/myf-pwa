@@ -19,12 +19,10 @@ export const Charts = () => {
     return total + stockQuantityPerMonth.quantity;
   }, 0);
 
-  console.log(findmuchOnMarket, findMuchProventsEarn, findStockQuantity * regularMarketPrice);
-
   const options = {
     Charts: {
       type: 'column',
-      backgroundColor: 'transparent',
+      backgroundColor: '',
       width: 1000
     },
     title: {

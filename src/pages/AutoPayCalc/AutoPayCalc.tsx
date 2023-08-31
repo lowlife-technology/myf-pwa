@@ -10,6 +10,7 @@ import { Drawer } from '../../components/Drawer/Drawer';
 import { Chart } from './Chart/Chart';
 import { useForm } from 'react-hook-form';
 import { DataConsumer } from './InputConsumer/DateConsumer/DateConsumer';
+import { InputDate } from '../../components/Input/InputDate';
 
 export default function AutoPayCalc() {
   const [asset, setAsset] = useState('');
@@ -97,7 +98,7 @@ export default function AutoPayCalc() {
           <div
             className={`flex gap-2 items-center ${data.shortName ? 'opacity-95' : 'opacity-0'}`}
           >
-            <DataConsumer
+            <InputDate
               onKeyDown={(e) => {
                 e.key === 'Enter' && setFlip(true);
               }}

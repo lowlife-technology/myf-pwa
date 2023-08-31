@@ -3,6 +3,7 @@ export default {
   content: ['./src/**/*.tsx'],
   theme: {
     extend: {
+      appearance: ['hover', 'focus'],
       colors: {
         brand: {
           grey1: '#E9E6E6',
@@ -34,8 +35,8 @@ export default {
       ms: ['14px', '20px'],
       md: ['16px', '22px'],
       ml: ['20px', '27px'],
-      xl: ['24px', '30px'],
-      lg: ['28px', '30px']
+      lg: ['24px', '30px'],
+      xl: ['28px', '30px']
     },
 
     animation: {
