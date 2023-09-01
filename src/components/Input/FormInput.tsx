@@ -1,21 +1,17 @@
-import {
-  ArrowLeftIcon,
-  ArrowRightIcon,
-  EyeIcon,
-  EyeSlashIcon,
-  MagnifyingGlassIcon
-} from '@heroicons/react/24/outline';
+import { ArrowLeftIcon, ArrowRightIcon, EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import { Text } from '../Text/Text';
 import { useState } from 'react';
-import { FieldError, FieldErrorsImpl, Merge } from 'react-hook-form';
+import { FieldError, FieldErrorsImpl, FieldValues, Merge, UseFormReturn } from 'react-hook-form';
 
 interface InputProps {
   onInputButton: () => void;
   inputButton?: boolean;
   label?: string;
+  form: UseFormReturn<FieldValues>;
+  name: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   disabled?: boolean | FieldError | Merge<FieldError, FieldErrorsImpl>;
-  icon?: 'password' | 'aleft' | 'arigth' | 'seacrh';
+  icon?: 'password' | 'aleft' | 'arigth';
   defaultValue?: string;
   passwordMode?: boolean;
   inputType?: string;
@@ -23,10 +19,12 @@ interface InputProps {
   placeholder?: string;
 }
 
-export const Input = ({
+export const FormInput = ({
   onInputButton,
   inputButton,
+  form,
   label,
+  name,
   icon,
   onChange,
   disabled,
@@ -44,12 +42,10 @@ export const Input = ({
     switch (icon) {
       case 'aleft':
         iconType = <ArrowLeftIcon className={iconStyle} />;
+
         break;
       case 'arigth':
         iconType = <ArrowRightIcon className={iconStyle} />;
-        break;
-      case 'seacrh':
-        iconType = <MagnifyingGlassIcon className={iconStyle} />;
         break;
       case 'password':
         iconType = (
@@ -74,6 +70,7 @@ export const Input = ({
       <Text>{label}</Text>
       <div className='flex h-11 p-1  items-center rounded-full w-full shadow-inner justify-between '>
         <input
+          {...form.register(name)}
           type={passwordMode ? 'password' : inputType}
           defaultValue={defaultValue}
           autoComplete={passwordMode ? 'on' : ''}
@@ -102,6 +99,11 @@ export const Input = ({
           </button>
         ) : null}
       </div>
+      {form.formState.errors[name] && (
+        <Text size='small' opacity='easy' color='red-1'>
+          {`${form.formState.errors[name]?.message}` || 'Valor inválido'}
+        </Text>
+      )}
     </div>
   );
 };

@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useEffect, useState } from 'react';
-import { Input } from '../../../components/Input/Input';
+import { Input } from '../../../components/Input/FormInput';
 
 interface SecretProps {
   onSubmit: () => void;
@@ -50,7 +50,7 @@ export default function Secret({ onSubmit, onClick, hidden }: SecretProps) {
       <div className='flex flex-col pt-10 gap-10 md:w-fit w-full'>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className='flex flex-col gap-10'>
-            <Input
+            <FormInput
               onInputButton={() => setShowPassword(!showPasswors)}
               inputButtonType='button'
               passwordMode={showPasswors}
@@ -61,7 +61,7 @@ export default function Secret({ onSubmit, onClick, hidden }: SecretProps) {
               placeholder='supersecret'
               inputButton
             />
-            <Input
+            <FormInput
               inputButtonType='submit'
               passwordMode={showPasswors}
               form={form}

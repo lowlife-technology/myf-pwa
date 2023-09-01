@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Input } from '../../../components/Input/Input';
+import { Input } from '../../../components/Input/FormInput';
 
 interface PhoneEmailProps {
   onClick: () => void;
@@ -29,7 +29,7 @@ export default function PhoneEmail({ onClick, onSubmit, hidden }: PhoneEmailProp
       <div className='flex flex-col pt-10 gap-10 md:w-fit w-full'>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className='flex flex-col gap-10'>
-            <Input
+            <FormInput
               onInputButton={() => {}}
               inputButtonType='button'
               form={form}
@@ -41,7 +41,7 @@ export default function PhoneEmail({ onClick, onSubmit, hidden }: PhoneEmailProp
               inputType='text'
               disabled={isEmailInvalid}
             />
-            <Input
+            <FormInput
               inputType='text'
               inputButtonType='submit'
               form={form}

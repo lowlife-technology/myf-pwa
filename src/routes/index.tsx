@@ -4,5 +4,6 @@ import PublicRoutes from './PublicRoutes';
 
 export default function Route() {
   const { isAuth } = useAppSelector((store) => store.EntraceReducer);
+
   return !isAuth ? <PublicRoutes /> : <PrivateRoutes />;
 }

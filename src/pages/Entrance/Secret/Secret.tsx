@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { PageWrapper } from '../../../components/PageWrapper/PageWrapper';
 import { useNavigate } from 'react-router-dom';
-import { Input } from '../../../components/Input/Input';
+import { FormInput } from '../../../components/Input/FormInput';
 
 export default function Secret() {
   const navigate = useNavigate();
@@ -10,7 +10,7 @@ export default function Secret() {
     <PageWrapper title='Login/Register' onClickBack={() => navigate('/login')}>
       <form>
         <div className='flex flex-col items-center pt-10 gap-10 w-full'>
-          <Input
+          <FormInput
             name='email'
             form={form}
             inputType='email'
@@ -19,7 +19,7 @@ export default function Secret() {
             label='Your email or phone number'
             inputButton
           />
-          <Input
+          <FormInput
             form={form}
             name='password'
             inputType='password'

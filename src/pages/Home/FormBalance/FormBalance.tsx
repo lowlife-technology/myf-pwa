@@ -2,10 +2,10 @@ import { Link } from 'react-router-dom';
 import { Button } from '../../../components/Buttons/Button';
 import { CircleBtn } from '../../../components/Buttons/CircleBtn';
 import { ExpandableInput } from '../../../components/Input/ExpandableInput';
-import { Input } from '../../../components/Input/Input';
 import { FieldValues, UseFormReturn } from 'react-hook-form';
 import { useState } from 'react';
 import { InputDate } from '../../../components/Input/InputDate';
+import { FormInput } from '../../../components/Input/FormInput';
 
 interface FormBalanceProps {
   form: UseFormReturn<FieldValues>;
@@ -18,14 +18,14 @@ export const FormBalance = ({ form, onClick }: FormBalanceProps) => {
   return (
     <div className='flex xl:w-1/4 xl:max-w-[400px] w-full h-full xl:h-4/5 gap-10 flex-col  xl:shadow-button xl:px-10'>
       <div className='w-full gap-10 xl:gap-8 xl:py-4 flex flex-col h-full '>
-        <Input
+        <FormInput
           onInputButton={() => {}}
           label='Spend'
           placeholder='ex.: Gas station'
           name='spend'
           form={form}
         />
-        <Input
+        <FormInput
           onInputButton={() => {}}
           label='Amount'
           placeholder='$ 0,00'
