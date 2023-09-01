@@ -18,7 +18,7 @@ export default function Home() {
     console.log(id);
   };
   return (
-    <div className='flex flex-col h-full w-full'>
+    <div className='flex flex-col h-screen w-full'>
       <HomeHeader />
       <div className='flex h-full items-start justify-between gap-2 xl:h-4/5'>
         <FormBalance form={form} onClick={handleCategorySelect} />

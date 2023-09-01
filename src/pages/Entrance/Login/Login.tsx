@@ -1,5 +1,4 @@
 import { useForm } from 'react-hook-form';
-import { Input } from '../../../components/Input/Input';
 import { PageWrapper } from '../../../components/PageWrapper/PageWrapper';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -7,6 +6,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { EntraceSlice } from '../slice/EntraceSlice';
+import { FormInput } from '../../../components/Input/FormInput';
 
 const LoginSchemaValidation = z.object({
   email: z
@@ -66,7 +66,7 @@ export default function Login() {
             <div
               className={`${!isUser && 'hidden'} flex flex-col items-center pt-10 gap-10 w-full`}
             >
-              <Input
+              <FormInput
                 name={name}
                 form={form}
                 onChange={(e) => handleChangeInput(e)}
@@ -79,7 +79,7 @@ export default function Login() {
             <div
               className={`${isUser && 'hidden'} flex flex-col items-center pt-10 gap-10 w-full`}
             >
-              <Input
+              <FormInput
                 form={form}
                 name='password'
                 inputType='password'
